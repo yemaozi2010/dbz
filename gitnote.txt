@@ -52,4 +52,11 @@ git checkout -- filename可以丢弃工作区的修改
 回到和版本库一模一样的状态；
 一种是readme.txt已经添加到缓存库，又做了修改，现在，撤销修改就是
 回到添加到缓存区后的状态。
-
+总之，就是让这个文件回到最近一次git commit或git add的状态。
+git checkout -- filename 命令中到--很重要，没有--，就变成了“切换
+到另一个分支"。
+git reset HEAD filename 可以把缓存区到修改撤销(unstage)，重新
+放回工作区。
+git reset HEAD readme.txt 
+git reset 命令既可以回退版本，也可以把缓存区到修改回退到工作区。
+HEAD表示最新的版本。
