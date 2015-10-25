@@ -7,4 +7,7 @@ gtit commit -m "wrote a readme file"
 git add file1.txt
 git add file2.txt file3.txt
 git commit -m "add 3 files"
-3.
+3.查看仓库当前到状态
+git status
+4.查看与上次提交修改的内容有什么不同之处
+git diff
