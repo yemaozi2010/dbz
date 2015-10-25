@@ -1,5 +1,10 @@
+1.初始化一个Git仓库
 mkdir learngit
 git init
+2.添加文件到Git仓库
 git add readme.txt
 gtit commit -m "wrote a readme file"
-
+git add file1.txt
+git add file2.txt file3.txt
+git commit -m "add 3 files"
+3.
