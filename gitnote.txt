@@ -26,3 +26,17 @@ git reset --hard 28828282  //回退到版本ID为28828282的版本
 git reset --hard HEAD^   //回退到上一个版本
 7.Git提供了一个命令来记录你的每一次命令
 git reflog
+8.工作区和缓存区
+Git和其他版本控制系统如SVN的一个不同之处就是有缓存区到概念。
+工作区(Working Directory)就是电脑中看到的目录，比如
+/home/bbwl/learngit文件夹就是一个工作区。
+版本库(Repository)，工作区中有一个隐藏目录.git，这个可以看作
+Git的版本库。
+Git的版本库里存放了很多东西，其中最重要的就是被称为stageu（或者
+叫index）的缓存区，还有Git为我们自动创建的第一个分支master，以及
+指向master的一个指针叫HEAD。
+我们把文件往Git版本库里添加的时候，是分两步执行的：
+第一步用git add把文件添加进去，实际上就是把文件修改添加到缓冲区；
+第二步用git commit提交更改，实际上就是把缓存区的所有内容提交到
+当前分支。
+
