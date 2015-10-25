@@ -1,3 +1,7 @@
+0.配置Git用户信息
+git config --global user.naem="yemaozi2010"
+git config --global user.email="hshunzhong1212@163.com"
+git config --list   //查看config信息
 1.初始化一个Git仓库
 mkdir learngit
 git init
@@ -11,3 +15,6 @@ git commit -m "add 3 files"
 git status
 4.查看与上次提交修改的内容有什么不同之处
 git diff
+5.显示从最近开始到最远到提交日志
+git log
+git log --pretty=oneline  //每条记录按一行来显示
