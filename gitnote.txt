@@ -24,4 +24,5 @@ HEAD-100
 git reset --hard 28828282  //回退到版本ID为28828282的版本
           //无需写全版本号，写前几位就可以了，git会自动匹配
 git reset --hard HEAD^   //回退到上一个版本
-
+7.Git提供了一个命令来记录你的每一次命令
+git reflog
