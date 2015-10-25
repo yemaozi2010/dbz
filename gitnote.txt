@@ -1,0 +1,5 @@
+mkdir learngit
+git init
+git add readme.txt
+gtit commit -m "wrote a readme file"
+
