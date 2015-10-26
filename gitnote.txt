@@ -1,6 +1,6 @@
 0.配置Git用户信息
-git config --global user.naem="yemaozi2010"
-git config --global user.email="hshunzhong1212@163.com"
+git config --global user.naem "yemaozi2010"
+git config --global user.email "hshunzhong1212@163.com"
 git config --list   //查看config信息
 1.初始化一个Git仓库
 mkdir learngit
