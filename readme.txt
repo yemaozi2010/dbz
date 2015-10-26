@@ -5,3 +5,4 @@ Git is a nice application.
 git modify
 add test retreat in the morning
 creating a new branch is quick AND very simple.
+merge with no-ff
