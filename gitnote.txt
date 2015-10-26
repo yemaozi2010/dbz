@@ -163,3 +163,14 @@ git merge命令用于合并指定分支到当前分支。合并后，再查看gi
 当然，也不是每次合并都能Fast-forward，我们后面会将其他方式的合并。
 合并完成后，就可以放心地删除dev分支了：
 git branch -d dev
+删除后，查看branch，就只剩下master分支了
+git branch
+因为创建、合并和删除分支非常快，所以Git鼓励你使用分支完成某个任务，
+合并后再删掉分支，这和直接在master分支上工作效果是一样的，但过程更安全。
+Git鼓励大量使用分支：
+查看分支：git branch
+创建分支：git branch <name>
+切换分支：git checkout <name>
+创建+切换分支：git checkout -b <name>
+合并某分支到当前分支：git merge <name>
+删除分支：git branch -d <name>
