@@ -8,3 +8,4 @@ creating a new branch is quick AND very simple.
 merge with no-ff
 newly add
 dev content1
+dev content2
