@@ -4,4 +4,4 @@ Git tracks changes.
 Git is a nice application.
 git modify
 add test retreat 1
-creating a new branch is quick and very simple.
+creating a new branch is quick AND very simple.
