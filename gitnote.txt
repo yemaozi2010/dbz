@@ -228,6 +228,3 @@ git checkout master
 git checkout -b issue-101
 现在修复bug，需要把“Git is free software ...”改为“Git is a free
 software ...”，然后提交：
-
-just for stash test ....
-test
