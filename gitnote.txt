@@ -314,4 +314,36 @@ origin  git@github.com:michaelliao/learngit.git (push)
 push的地址。
 推送分支，就是把该分支上的所有本地提交推送到远程库。推送时，要指定本地
 分支，这样，Git就会把该分支推送到远程库对应的远程分支上：
+$ git push origin master
+如果要推送其他分支，比如dev，就改成：
+$ git push origin dev
+但是，并不是一定要把本地分支往远程推送，那么，哪些分支需要推送，哪些
+不需要呢？
+master分支是主分支，因此要时刻与远程同步；
+dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
+bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周
+到底修复了几个bug；
+feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
+总之，就是在Git中，分支完全可以在本地自己藏着玩，是否推送，视你的心情
+而定！
+抓取分支
+多人协作时，大家都会往master和dev分支上推送各自的修改。
+现在，模拟一个你的小伙伴，可以在另一台电脑（注意要把SSH Key添加到GitHub）
+或者同一台电脑的另一个目录下克隆：
+git clone https://github.com/yemaozi2010/dbz.git
+Cloning into 'dbz'...
+remote: Counting objects: 171, done.
+remote: Compressing objects: 100% (79/79), done.
+remote: Total 171 (delta 103), reused 158 (delta 90), pack-reused 0
+Receiving objects: 100% (171/171), 22.35 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (103/103), done.
+Checking connectivity... done.
+当你的小伙伴从远程库clone时，默认情况下，你的小伙伴只能看到本地的
+master分支。不信可以用git branch命令看看：
+$ git branch
+* master
+现在，你的小伙伴要在dev分支上开发，就必须创建远程origin的dev分支到本地，
+于是他用这个命令创建本地dev分支：
+git checkout -b dev origin/dev
+现在，他就可以在dev上继续修改，然后，时不时地把dev分支push到远程：
 
