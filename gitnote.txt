@@ -228,3 +228,46 @@ git checkout master
 git checkout -b issue-101
 现在修复bug，需要把“Git is free software ...”改为“Git is a free
 software ...”，然后提交：
+git add readme.txt 
+git commit -m "fix bug 101"
+修复完成后，切换到master分支，并完成合并，最后删除issue-101分支：
+git checkout master
+git merge --no-ff -m "merged bug fix 101" issue-101
+git branch -d issue-101
+太棒了，原计划两个小时的bug修复只花了5分钟！现在，是时候接着回到dev分支
+干活了！
+$ git checkout dev
+Switched to branch 'dev'
+$ git status
+# On branch dev
+nothing to commit (working directory clean)
+工作区是干净的，刚才的工作现场存到哪去了？用git stash list命令看看：
+$ git stash list
+stash@{0}: WIP on dev: 6224937 add merge
+git把stash内容存在某个地方了，但是需要恢复一下，有两个办法：
+一是用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用
+git stash drop来删除；
+另一种方式是用git stash pop，恢复的同时把stash内容也删了：
+$ git stash pop
+# On branch dev
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       new file:   hello.py
+#
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working 
+#         directory)
+#
+#       modified:   readme.txt
+#
+Dropped refs/stash@{0} (f624f8e5f082f2df2bed8a4e09c12fd2943bdd40)
+再用git stash list查看，就看不到任何stash内容了
+你可以多次stash，恢复的时候，先用git stash list查看，然后恢复指定的
+stash，用命令：
+$ git stash apply stash@{0}
+修复bug时，我们会通过创建新的bug分支进行修复，然后合并，最后删除；
+当手头工作没有完成时，先把工作现场git stash一下，然后去修复bug，修复
+后，再git stash pop，回到工作现场。
+
