@@ -346,4 +346,5 @@ $ git branch
 于是他用这个命令创建本地dev分支：
 git checkout -b dev origin/dev
 现在，他就可以在dev上继续修改，然后，时不时地把dev分支push到远程：
-
+git add gitnote.txt
+git commit -m "add clone comment 1"
