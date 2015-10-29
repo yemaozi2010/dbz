@@ -300,3 +300,18 @@ Deleted branch feature-vulcan (was 756d4af).
 终于删除成功！
 开发一个新feature，最好新建一个分支；
 如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。
+20.多人协作
+当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支
+对应起来了，并且，远程仓库的默认名称是origin。
+要查看远程库的信息，用git remote：
+$ git remote
+origin
+或者用git remote -v显示更详细的信息：
+$ git remote -v
+origin  git@github.com:michaelliao/learngit.git (fetch)
+origin  git@github.com:michaelliao/learngit.git (push)
+上面显示了可以抓取和推送的origin的地址。如果没有推送权限，就看不到
+push的地址。
+推送分支，就是把该分支上的所有本地提交推送到远程库。推送时，要指定本地
+分支，这样，Git就会把该分支推送到远程库对应的远程分支上：
+
