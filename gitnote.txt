@@ -365,3 +365,4 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 推送失败，因为你的小伙伴的最新提交和你试图推送的提交有冲突，解决办法也很简单，
 Git已经提示我们，先用git pull把最新的提交从origin/dev抓下来，然后，在本地合
 并，解决冲突，再推送：
+just for test
