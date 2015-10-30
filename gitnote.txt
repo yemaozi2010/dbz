@@ -351,4 +351,17 @@ git commit -m "add clone comment 1"
 git push origin dev
 你的小伙伴已经向origin/dev分支推送了他的提交，而碰巧你也对同样的文件作
 了修改，并试图推送：
-
+git add gitnote.txt
+git commit -m "git push comment 1"
+git push origin dev
+To git@github.com:yemaozi2010/dbz.git
+! [rejected]        dev -> dev (fetch first)
+error: failed to push some refs to 'git@github.com:yemaozi2010/dbz.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+推送失败，因为你的小伙伴的最新提交和你试图推送的提交有冲突，解决办法也很简单，
+Git已经提示我们，先用git pull把最新的提交从origin/dev抓下来，然后，在本地合
+并，解决冲突，再推送：
