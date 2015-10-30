@@ -348,3 +348,79 @@ git checkout -b dev origin/dev
 现在，他就可以在dev上继续修改，然后，时不时地把dev分支push到远程：
 git add gitnote.txt
 git commit -m "add clone comment 1"
+git push origin dev
+你的小伙伴已经向origin/dev分支推送了他的提交，而碰巧你也对同样的文件作
+了修改，并试图推送：
+git add gitnote.txt
+git commit -m "git push comment 1"
+git push origin dev
+To git@github.com:yemaozi2010/dbz.git
+! [rejected]        dev -> dev (fetch first)
+error: failed to push some refs to 'git@github.com:yemaozi2010/dbz.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+推送失败，因为你的小伙伴的最新提交和你试图推送的提交有冲突，解决办法也很简单，
+Git已经提示我们，先用git pull把最新的提交从origin/dev抓下来，然后，在本地合
+并，解决冲突，再推送：
+$ git pull
+remote: Counting objects: 5, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 3 (delta 0)
+Unpacking objects: 100% (3/3), done.
+From github.com:michaelliao/learngit
+fc38031..291bea8  dev        -> origin/dev
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details
+git pull <remote> <branch>
+If you wish to set tracking information for this branch you can do so with:
+git branch --set-upstream dev origin/<branch>
+git pull也失败了，原因是没有指定本地dev分支与远程origin/dev分支的链接，
+根据提示，设置dev和origin/dev的链接：
+$ git branch --set-upstream dev origin/dev
+Branch dev set up to track remote branch dev from origin.
+再pull：
+git pull
+Auto-merging gitnote.txt 
+CONFLICT (content): Merge conflict in gitnote.txt
+Automatic merge failed; fix conflicts and then commit the result.
+这回git pull成功，但是合并有冲突，需要手动解决，解决的方法和分支管理中的
+解决冲突完全一样。解决后，提交，再push：
+$ git commit -m "merge and fix 1"
+$ git push origin dev
+因此，多人协作的工作模式通常是这样：
+1.首先，可以试图用git push origin branch-name推送自己的修改；
+2.如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
+3.如果合并有冲突，则解决冲突，并在本地提交；
+4.没有冲突或解决掉冲突后，再用git push origin branch-name推送就能成功。
+如果git pull提示"no tracking information"，则说明本地分支和远程分支的链接关系
+没有创建，用命令git branch --set-upstream branch-name origin/branch-name。
+这就是多人协作的工作模式，一旦熟悉了，就非常简单。
+查看远程库信息，使用git remote -v；
+本地新建的分支如果不推送到远程，对其他人就是不可见的；
+从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull
+抓取远程的新提交；
+在本地创建和远程分支对应的分支，使用
+git checkout -b branch-name origin/branch-name
+本地和远程分支的名称最好一致；
+建立本地分支和远程分支的关联，使用
+git branch --set-upstream branch-name origin/branch-name；
+从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+21.创建标签
+发布一个版本时，我们通常先在版本库中打一个标签，这样，就唯一确定了打标签时刻
+的版本。将来无论什么时候，取某个标签的版本，就是把那个打标签的时刻的历史版本
+取出来。所以，标签也是版本库的一个快照。
+git的标签虽然是版本库的快照，但其实它就是指向某个commit的指针（跟分支很像
+对不对？但是分支可以移动，标签不能移动），所以，创建和删除标签都是瞬间完成的。
+在Git中打标签非常简单，首先，切换到需要打标签的分支上：
+$ git branch
+* dev
+  master
+$ git checkout master
+Switched to branch 'master'
+然后，敲命令git tag <name>就可以打一个新标签：
+$ git tag v1.0
+
