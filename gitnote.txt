@@ -423,4 +423,68 @@ $ git checkout master
 Switched to branch 'master'
 然后，敲命令git tag <name>就可以打一个新标签：
 $ git tag v1.0
+可以用命令git tag查看所有标签。
+默认标签是打在最新提交的commit上的。有时候，如果忘了打标签，比如，现在已经是
+周五了，但应该在周一打的标签没有打，怎么办？
+方法是找到历史提交的commit id，然后打上就可以了
+$ git log --pretty=oneline --abbrev-commit
+fd73e2a 标签管理1
+394b162 多人协作小结
+0a37648 多人协作4
+788c475 多人协作3
+347ac00 window push comment 1
+e647096 just for test1
+7d4010e resolve conflict for push 1
+1f6f0d8 pull comment 2
+bdca459 pull comment 1
+比方说要对add merge这次提交打标签，它对应的commit id是394b162，敲入命令：
+$ git tag v0.1 394b162
+注意，标签不是按时间顺序列出，而是按字母排序的。
+可以用git show <tagname>查看标签信息：
+git show v0.1
+还可以创建带有说明的标签，用-a指定标签名，-m指定说明文字：
+$ git tag -a dev_v0.2 -m "tag for dev v0.2" 7d4010
+还可以通过-s用私钥签名一个标签：
+$ git tag -s v0.2 -m "signed version 0.2 released" fec145a
+签名采用PGP签名，因此，必须首先安装gpg（GnuPG），如果没有找到gpg，或者没有
+gpg密钥对，就会报错。
+如果报错，请参考GnuPG帮助文档配置Key。
+带GPG签名的Git tag
+Tag即标签，用以给项目仓储打标签，通常用作里程碑标识，以方便项目进度、发布
+版本管理及规划。 
+Git tag可以用来创建标签，列出标签表，删除标签及用以验证带有GPG签名的带标签
+的项目。
+git tag常见用法
+创建Tag
+git tag v1.0 >标记当前位置为tag，tag名为v1.0
+git tag -m "Say something" v1.0 >标记当前位置为tag，
+tag描述为"Say something", tag名为v1.0
+列出tag表
+git tag (-l) >列出tag表，只显示标签名
+git tag -ln >列出tag表，并显示其message（描述）
+删除tag
+git tag -d [tag name] >删除某个tag
+验证tag
+git tag -v [tag name] >验证某个tag的GPG签名
+GPG是加密软件，可以使用GPG生成的公钥在网上安全的传播你的文件、代码。
+为什么说安全的？
+以Google所开发的repo为例，repo即采用GPG验证的方式，每个里程碑tag都带有GPG
+加密验证，假如在里程碑v1.12.3处你想要做修改，修改完后将这个tag删除，然后
+又创建同名tag指向你的修改点，这必然是可以的。但是，在你再次clone你修改后
+的项目时，你会发现，你对此里程碑tag的改变不被认可，验证失败，导致你的修改
+在这里无法正常实现。这就是GPG验证的作用，这样就能够保证项目作者（私钥持有者）
+所制定的里程碑别人将无法修改。那么，就可以说，作者的代码是安全传播的。
+为什么会有这种需求？
+一个项目从开发到发布，再到后期的更新迭代，一定会存在若干的稳定版本与
+开发版本（存在不稳定因素）。作为项目发起者、持有者，有权定义他（们）所认可
+的稳定版本，这个稳定版本，将不允许其他开发者进行改动。
+还以Google的repo项目为例，项目所有者定义项目开发过程中的点A为稳定版v1.12.3，
+那么用户在下载v1.12.3版本后，使用的肯定是A点所生成的项目、产品，就算其他开发
+者能够在本地对v1.12.3进行重新指定，指定到他们修改后的B点，但是最终修改后的
+版本给用户用的时候，会出现GPG签名验证不通过的问题，也就是说这样的修改是不生效的。
+可能还是不太好理解，说一个我曾经遇过的坑，repo在某个版本有个小错误，我在这
+个版本修复错误后，提交到内网的服务器给同事用（我重新定义这个版本的指向），最后
+发现同事在更新项目后，出现版本GPG签名验证错误，不能正常使用。
+说了这么多，希望大家能够理解GPG签名验证的意义所在。下边就说一说，如何在你的
+项目中使用这种方式生成GPG Key。
 
