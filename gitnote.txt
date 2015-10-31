@@ -530,7 +530,35 @@ gpg: Signature made 2015年10月30日 星期五 23时33分15秒 CST using RSA ke
 gpg: Good signature from "shunzhonghuang (gpg key for shunzhonghuang) 
 <hshunzhong1212@126.com>"
 至此，带有GPG签名验证的tag就做好了，其他开发者将无法修改你所签名的这个tag。
+git show <tagname>可以看到PGP签名信息：
+$ git show v0.2
+tag v0.2
+Tagger: yemaozi2010 <hshunzhong1212@163.com>
+Date:   Fri Oct 30 23:33:15 2015 +0800
 
+signed version 0.2 released
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
+iQEcBAABAgAGBQJWM427AAoJEFGFwtwp7MLCmX0H/RJUb2zEdkKHjNAOIoc9m9ds
+c+2pfTpzUjrS5zsuwwvd0cb7Wcltij9vK1fhKP0e/En15iiN+eWZf5Mt5+UiFot/
+V1g8JR77g0nzGSv6en01oJCFwGRB54eKvyt6zGGU+Q7K9pC9ERVgZw4GeUjaKAXv
+ctOQk5ubwl7LAeFKqz/VnG+7fwNniucU1vzr0q8DjSImSeo27U9o4lhfhwNr4G6V
+ComeYqhgUmfi3xZSgrGxeNxihOlFdJA2ub1jlzkJ1BLF8FNq9BWKX6zoScdK2dL7
++xhmvC9niDQNqyxF37yw1DM3YwKdcLQGnQuxf+iTxoFOtGxIMktXQwtSpDWoFWI=
+=dW9H
+-----END PGP SIGNATURE-----
 
+commit 9d18ea18662d533965be350ed2c6d3f72c2fd47c
+Author: yemaozi2010 <hshunzhong1212@163.com>
+Date:   Thu Oct 29 18:41:42 2015 +0800
+
+    feature小结2
+用PGP签名的标签是不可伪造的，因为可以验证PGP签名。验证签名的方法
+比较复杂，这里就不介绍了。
+小结：
+命令git tag <name>用于新建一个标签，默认为HEAD，也可以指定一个commit id；
+git tag -a <tagname> -m "blablabla..."可以指定标签信息；
+git tag -s <tagname> -m "blablabla..."可以用PGP签名标签；
+命令git tag可以查看所有标签。
 
