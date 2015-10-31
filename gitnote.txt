@@ -487,4 +487,78 @@ GPG是加密软件，可以使用GPG生成的公钥在网上安全的传播你�
 发现同事在更新项目后，出现版本GPG签名验证错误，不能正常使用。
 说了这么多，希望大家能够理解GPG签名验证的意义所在。下边就说一说，如何在你的
 项目中使用这种方式生成GPG Key。
+gpg --gen-key 然后根据提示选择你要的签名
+对以上信息进行确认，然后输入身份，最终确认，等待生成GPG Key。
+生成过程中可能出现类似提示：
+随机字节不够多。请再做一些其他的琐事，以使操作系统能搜集到更多的熵！
+(还需要174字节)
+疯狂的敲打键盘吧，不过看好还需要多少，悠着点。
+稍等片刻，GPG Key就能生成好了，验证一下是否生成成功：
+gpg --list-keys
+如果输出类似信息就代表属于你的GPG Key生成成功了：
+/home/keven/.gnupg/pubring.gpg
+------------------------------
+pub   2048R/AF26C87F 2013-09-30
+uid   Keven Liu (Gpg key for Keven Liu<airk908@gmail.com>) <airk908@gmail.com>
+sst-secret-keysub   2048R/C9A00F19 2013-09-30
+上边显示的是公钥，顺便也看一下与之匹配的私钥生成如何：
+gpg --list-secret-keys
+如果成功，会显示类似信息，不过文件位置应该是/home/keven/.gnupg/pubring.gpg
+（keven是我的用户名，你的机器上该是你的）
+使用GPG加密你的tag：
+git tag -s v0.2 -m "signed version 0.2 released" bdca459
+fatal: 'my tag message' is not a valid tag name.
+bbwl@bbwl-ThinkPad-X61:~/learngit$ git tag -s v0.2 -m 
+"signed version 0.2 released" bdca459
+gpg: skipped "yemaozi2010 <hshunzhong1212@163.com>": secret key not available
+gpg: signing failed: secret key not available
+error: gpg failed to sign the data
+error: unable to sign the tag
+这个错误一Google的话都是教你怎么生成一个GPG Key，其实不然，git tag
+有一条help这样写到：
+-u, --local-user <key-id> 使用另一个Key签名此tag
+所以，这个错误可以这样解决：
+git tag -u "shunzhonghuang" -s v0.2 -m "signed version 0.2 released" 9d18ea1
+这样，你的tag就用刚刚生成的GPG Key签名了。可以查看一下项目的tag验证信息：
+$ git tag -v v0.2
+object 9d18ea18662d533965be350ed2c6d3f72c2fd47c
+type commit
+tag v0.2
+tagger yemaozi2010 <hshunzhong1212@163.com> 1446219195 +0800
+signed version 0.2 released
+gpg: Signature made 2015年10月30日 星期五 23时33分15秒 CST using RSA key ID 29ECC2C2
+gpg: Good signature from "shunzhonghuang (gpg key for shunzhonghuang) 
+<hshunzhong1212@126.com>"
+至此，带有GPG签名验证的tag就做好了，其他开发者将无法修改你所签名的这个tag。
+git show <tagname>可以看到PGP签名信息：
+$ git show v0.2
+tag v0.2
+Tagger: yemaozi2010 <hshunzhong1212@163.com>
+Date:   Fri Oct 30 23:33:15 2015 +0800
+
+signed version 0.2 released
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAABAgAGBQJWM427AAoJEFGFwtwp7MLCmX0H/RJUb2zEdkKHjNAOIoc9m9ds
+c+2pfTpzUjrS5zsuwwvd0cb7Wcltij9vK1fhKP0e/En15iiN+eWZf5Mt5+UiFot/
+V1g8JR77g0nzGSv6en01oJCFwGRB54eKvyt6zGGU+Q7K9pC9ERVgZw4GeUjaKAXv
+ctOQk5ubwl7LAeFKqz/VnG+7fwNniucU1vzr0q8DjSImSeo27U9o4lhfhwNr4G6V
+ComeYqhgUmfi3xZSgrGxeNxihOlFdJA2ub1jlzkJ1BLF8FNq9BWKX6zoScdK2dL7
++xhmvC9niDQNqyxF37yw1DM3YwKdcLQGnQuxf+iTxoFOtGxIMktXQwtSpDWoFWI=
+=dW9H
+-----END PGP SIGNATURE-----
+
+commit 9d18ea18662d533965be350ed2c6d3f72c2fd47c
+Author: yemaozi2010 <hshunzhong1212@163.com>
+Date:   Thu Oct 29 18:41:42 2015 +0800
+
+    feature小结2
+用PGP签名的标签是不可伪造的，因为可以验证PGP签名。验证签名的方法
+比较复杂，这里就不介绍了。
+小结：
+命令git tag <name>用于新建一个标签，默认为HEAD，也可以指定一个commit id；
+git tag -a <tagname> -m "blablabla..."可以指定标签信息；
+git tag -s <tagname> -m "blablabla..."可以用PGP签名标签；
+命令git tag可以查看所有标签。
 
